@@ -1,13 +1,18 @@
 <template>
   <Header />
-  <router-view/>
+  <main>
+    <router-view/>
+  </main>
+  <Footer />
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 export default {
     components: {
     Header,
+    Footer
   },
 };
   
@@ -16,7 +21,13 @@ export default {
 <style lang="css">
   #app {
     background-color: #fafafa;
-    padding-bottom: 30px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    padding: 30px 0;
   }
 </style>
 

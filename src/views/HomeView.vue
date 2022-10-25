@@ -103,7 +103,6 @@ export default {
 <style scoped>
   .list-item {
     margin: -20px 0;
-    padding-top: 60px;
   }
   .list-item .wrap-card {
     margin: 20px 0;

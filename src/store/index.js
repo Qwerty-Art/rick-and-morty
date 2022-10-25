@@ -3,8 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     titlePage: {
-      title: '',
-      info: ''
+      title: null,
+      info: null
     }
   },
   mutations: {

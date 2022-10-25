@@ -1,20 +1,9 @@
 <template>
   <header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <nav class="navbar navbar-expand navbar-light bg-white">
       <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#navbarExample01"
-          aria-controls="navbarExample01"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarExample01">
+        <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li
               v-for="link in links"
@@ -41,7 +30,6 @@
       :style="{
         backgroundImage: 'url(' + require('@/assets/image/bg.jpg') + ')',
         backgroundPosition: '50% 100%',
-        height: '400px',
       }"
     >
       <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
@@ -61,7 +49,7 @@
 import { links } from "@/_config";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 
 export default {
   setup() {
@@ -89,3 +77,11 @@ export default {
   },
 };
 </script>
+
+<style lang="css">
+  .bg-image::before {
+    content: '';
+    display: block;
+    padding-top: 24%;
+  }
+</style>

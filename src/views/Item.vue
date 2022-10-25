@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
     <div class="row">
-      <div class="col-12 col-sm-4">
+      <div class="col-12 col-sm-4 mb-4">
         <div class="wrap-img"><img :src="results.image" alt="" /></div>
       </div>
 
