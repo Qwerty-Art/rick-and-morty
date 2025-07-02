@@ -46,99 +46,86 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useStore } from "vuex";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { axiosBase } from "@/_config";
 import { onBeforeMount, ref, onUnmounted } from "vue";
 
-export default {
-  setup() {
-    const store = useStore();
-    const itemId = ref(null);
-    const results = ref([]);
-    const route = useRoute();
-    const numberCharacters = ref(1);
-    const linkPrev = ref();
-    const linkNext = ref();
-    const isActivePrev = ref(true);
-    const isActiveNext = ref(true);
+const store = useStore();
+const itemId = ref(null);
+const results = ref([]);
+const route = useRoute();
+const numberCharacters = ref(1);
+const linkPrev = ref();
+const linkNext = ref();
+const isActivePrev = ref(true);
+const isActiveNext = ref(true);
 
-    const itemRout = () => {
-      return (itemId.value = route.params.id);
-    };
+const itemRout = () => {
+    return (itemId.value = route.params.id);
+};
 
-    const getCharacter = () => {
-      axiosBase
+const getCharacter = () => {
+    axiosBase
         .get(`/character/${itemId.value}`)
         .then((res) => {
-          store.dispatch("setTitlePage", {
-            title: res.data.name,
-            info: res.data.status,
-          });
-          return (results.value = res.data);
+            store.dispatch("setTitlePage", {
+                title: res.data.name,
+                info: res.data.status,
+            });
+            return (results.value = res.data);
         })
         .catch((e) => console.log(e));
-    };
+};
 
-    const getNumberCharacter = () => {
-      axiosBase
+const getNumberCharacter = () => {
+    axiosBase
         .get(`/character`)
         .then((res) => {
-          numberCharacters.value = res.data.info.count;
-          getPrevPage();
-          getNextPage();
-          return false;
+            numberCharacters.value = res.data.info.count;
+            getPrevPage();
+            getNextPage();
+            return false;
         })
         .catch((e) => console.log(e));
-    };
+};
 
-    const getPrevPage = () => {
-      if (itemId.value != 1) {
+const getPrevPage = () => {
+    if (itemId.value != 1) {
         isActivePrev.value = true;
         return (linkPrev.value = Number(itemId.value) - 1);
-      } else {
+    } else {
         return (isActivePrev.value = false);
-      }
-    };
-    const getNextPage = () => {
-      if (itemId.value < numberCharacters.value) {
+    }
+};
+const getNextPage = () => {
+    if (itemId.value < numberCharacters.value) {
         isActiveNext.value = true;
         return (linkNext.value = Number(itemId.value) + 1);
-      } else {
+    } else {
         return (isActiveNext.value = false);
-      }
-    };
+    }
+};
 
-    onBeforeMount(() => {
-      itemRout();
-      getCharacter();
-      getNumberCharacter();
-    });
+onBeforeMount(() => {
+    itemRout();
+    getCharacter();
+    getNumberCharacter();
+});
 
-    onBeforeRouteUpdate(async (to, from) => {
-      if (to.params.id !== from.params.id) {
+onBeforeRouteUpdate(async (to, from) => {
+    if (to.params.id !== from.params.id) {
         itemId.value = to.params.id;
         getCharacter();
         getPrevPage();
         getNextPage();
-      }
-    });
+    }
+});
 
-    onUnmounted(() => {
-      store.dispatch("setTitlePage", { title: "", info: "" });
-    });
-
-    return {
-      results,
-      linkPrev,
-      linkNext,
-      isActivePrev,
-      isActiveNext,
-      getCharacter,
-    };
-  },
-};
+onUnmounted(() => {
+    store.dispatch("setTitlePage", { title: "", info: "" });
+});
 </script>
 
 <style>
